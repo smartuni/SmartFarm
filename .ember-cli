@@ -1,0 +1,9 @@
+# ~/.ember-cli
+{
+  "skipGit" : true,
+  "port" : 4200,
+  "host" : "0.1.0.1",
+  "liveReload" : true,
+  "environment" : "mock-development",
+  "checkForUpdates" : false
+}
