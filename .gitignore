@@ -43,5 +43,5 @@ testem.log
 Thumbs.db
 
 # Custom Styles and JS Functions
-src/static/js/
-src/static/css/
+# src/static/js/
+# src/static/css/
