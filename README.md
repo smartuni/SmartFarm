@@ -15,9 +15,10 @@
         </ul>
     </li>
     <li>
-        <span>Dependencies</span>
+        <span>Dependencies und Source Files</span>
         <ul>
             <li><pre>bower install</pre></li>
+            <li><pre>grunt watch</pre></li>
         </ul>
     </li>
 </ul>
