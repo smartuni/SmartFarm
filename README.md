@@ -14,15 +14,27 @@
             <li>NodeJS &amp; npm</li>
         </ul>
     </li>
+    <li>
+        <span>Dependencies</span>
+        <ul>
+            <li><pre>bower install</pre></li>
+        </ul>
+    </li>
 </ul>
 <h2>
     Starten der WebApp
 </h2>
 <ul>
     <li>
+        <span>Starten des Servers (localhost)</span>
+        <ul>
+            <li><pre>ng serve</pre></li>
+        </ul>
+    </li>
+    <li>
         <span>Starten des Servers</span>
         <ul>
-            <li>`ng serve`</li>
+            <li><pre>ng serve --host 0.0.0.0</pre></li>
         </ul>
     </li>
 </ul>

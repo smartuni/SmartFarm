@@ -41,3 +41,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Custom Styles and JS Functions
+src/static/js/
+src/static/css/
