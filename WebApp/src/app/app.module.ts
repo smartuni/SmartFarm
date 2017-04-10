@@ -9,15 +9,27 @@ import { CollapseModule } from 'ng2-bootstrap/collapse';
 
 import { routes } from './app.router';
 
+import { AUTH_PROVIDERS } from 'angular2-jwt';
+
+import { AuthGuard } from './common/auth.guard';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
 import { AdminComponent } from './admin/admin.component';
+import { ImprintComponent } from './imprint/imprint.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    AdminComponent
+    AdminComponent,
+    ImprintComponent,
+    AboutComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     AlertModule.forRoot(),
@@ -27,7 +39,7 @@ import { AdminComponent } from './admin/admin.component';
     HttpModule,
     routes
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

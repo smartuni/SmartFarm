@@ -19,16 +19,26 @@
           <a routerLink="home" (click)="isCollapsed = !isCollapsed">Startseite</a>
         </li>
         <li>
+          <a routerLink="about" (click)="isCollapsed = !isCollapsed">About</a>
+        </li>
+        <li>
           <a routerLink="admin" (click)="isCollapsed = !isCollapsed">Admin</a>
+        </li>
+        <li>
+          <a routerLink="imprint" (click)="isCollapsed = !isCollapsed">Impressum</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
 <div class="clearfix"></div>
-<br />
-<br />
-<br />
+<div class="main-container">
+  <div class="container">
+      <router-outlet></router-outlet>
+  </div>
+</div>
 <div class="container">
-    <router-outlet></router-outlet>
+  <div class="footer-disclaimer">
+    SmartFarm - Projekt RIOT Sommer Semester 2017 - Copyright &copy; 2017 by SmartFarm (HAW Hamburg)
+  </div>
 </div>

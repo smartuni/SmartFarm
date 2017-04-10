@@ -1,0 +1,27 @@
+<form role="form" (submit)="login($event, username.value, password.value)">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1 class="panel-title">Login</h1>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" #username class="form-control" id="username" placeholder="Username">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="password">Passwort</label>
+            <input type="password" #password class="form-control" id="password" placeholder="Password">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <button type="submit" class="btn btn-success btn-sm">Login</button>
+      <a [routerLink]="['/signup']" class="btn btn-default btn-sm">registrieren</a>
+    </div>
+  </div>
+ </form>
