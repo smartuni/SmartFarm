@@ -38,8 +38,9 @@ by Sebastian Schulz, Jonas Radtke, Dominik Zürner, Philipp Kroll, Nassim Agrebi
     Kommunikation zum Web-Server
  
  ## Milestones
-  10.04.17 - Ausgearbeitetes Konzept der Gruppe
-  08.05.17 - Mock-Up (Webseiten Dummy und Model)
-  06.06.17 - Erste Funktionen
-  26.06.17 - Abgabe des Projektes
-
+ <ul>
+  <li>10.04.17 - Ausgearbeitetes Konzept der Gruppe</li>
+  <li>08.05.17 - Mock-Up (Webseiten Dummy und Model)</li>
+  <li>06.06.17 - Erste Funktionen</li>
+  <li>26.06.17 - Abgabe des Projektes</li>
+</ul>
