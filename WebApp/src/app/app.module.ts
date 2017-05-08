@@ -11,8 +11,6 @@ import { routes } from './app.router';
 
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 
-import { AuthGuard } from './common/auth.guard';
-
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
