@@ -9,8 +9,6 @@ import { CollapseModule } from 'ng2-bootstrap/collapse';
 
 import { routes } from './app.router';
 
-import { AUTH_PROVIDERS } from 'angular2-jwt';
-
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
@@ -37,7 +35,7 @@ import { RegisterComponent } from './register/register.component';
     HttpModule,
     routes
   ],
-  providers: [AuthGuard],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
