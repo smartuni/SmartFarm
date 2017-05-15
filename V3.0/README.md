@@ -1,21 +1,22 @@
-[previous task](../task-03)
+[previous Version](../V2.0)
 
-# Task 4: Timers
-[`xtimer`](http://doc.riot-os.org/group__sys__xtimer.html) is the high level API of RIOT to multiplex hardware timers.
-For this task we need only the following functions
+# Main from SmartFarm Project
 
-    - `xtimer_now()` to get current system time in microseconds
-    - `xtimer_sleep(sec)` to sleep `sec` seconds
-    - `xtimer_usleep(usec)` to sleep `usec` microseconds
+## Funktions
+RFID-Part
+    
+    - send RFID of Tag
+    - send status of checksum
+    
+Voltage_Control
 
-## Task 4.1: Use `xtimer`
-* Note the inclusion of `xtimer` in the [Makefile](Makefile)
-```Makefile
-USEMODULE += xtimer
-```
-* Create a thread in [`main.c`](main.c#L12) that prints the current system time every 2 seconds
-* Check the existence of the thread with `ps` shell command
+     - send if fence is broken or if sth. lies on it
+     - send if animal-gate is open or closed
 
-[Read the doc](http://doc.riot-os.org/group__sys__xtimer.html)
-
-[next task](../task-05)
+    
+## To-Do:
+    -Test with real boards 
+    -Implementation func(IEEE 802.15.4 )
+    -Implementation Lora          
+    -Communication to RasPi (CoAP)
+    -Error-handling  
