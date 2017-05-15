@@ -1,0 +1,36 @@
+<div id="about_container" data-spy="scroll" data-target="#scroll-menu" class="row">
+  <div class="col-sm-8">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title">Einleitung</h1>
+      </div>
+      <div class="panel-body">
+        <p>SmartFarm ist ein Projekt für das Open-Source Betriebssystem RIOT. 
+          Das Ziel ist die Erkennung und Visualisierung von Bauernhöfen mit Weidezäunen.</p>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title">Server und Framework</h1>
+      </div>
+      <div class="panel-body">
+        <p>Grundlage ist das JS Framework Angular2 JS. Hierfür wird NPM und NodeJS benötigt.</p>
+        <p>Für die weiteren Funktionen und Module wird weiterhin Bower sowie Grunt benutzt.</p>
+      </div>
+    </div>
+
+  </div>
+  <div id="scroll-menu" class="col-sm-4">
+    <div class="list-group">
+      <a class="list-group-item" href="about#start">Einleitung</a>
+      <a class="list-group-item" href="about#server">Server und Framework</a>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$('#about_container').scrollspy({ 
+  target: '#scroll-menu' 
+});
+</script>
