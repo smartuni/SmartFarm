@@ -3,7 +3,7 @@
 npm install
 ```
 
-# Server starten
+# start the server
 ```
 node coan.js
 ```
