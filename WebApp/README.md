@@ -5,7 +5,8 @@ Autor: Sebastian Schulz
 ## Installation
 
 * Requirements
-	* NodeJS &amp; npm</li>
+	* NodeJS &amp; npm
+	* bower: npm install -g bower
 * Dependencies und Source Files
 	* <pre>bower install</pre>
     * <pre>grunt watch</pre>
