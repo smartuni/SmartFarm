@@ -1,5 +1,5 @@
 # Installation
-> npm_install
+> npm install
 
 # Server starten
 > node coan.js
