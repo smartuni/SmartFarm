@@ -31,6 +31,8 @@ server.on('request', function (req, res) {
 	
 	try {
 		
+		var isRequest = false;
+		
 		responseArray = {
 			status 	: 500,
 			action 	: 'unknown',
@@ -61,6 +63,8 @@ server.on('request', function (req, res) {
 		// Requests
 		if (request_name === 'getusers') {
 
+			isRequest = true;
+			
 			getUserCount(function(error, count) {
 
 				try {
@@ -88,6 +92,8 @@ server.on('request', function (req, res) {
 
 		} if (request_name === 'getuser' && request_data !== '') {
 
+			isRequest = true;
+			
 			getUser(parseInt(request_data, 10), function(status, data) {
 
 				try {
@@ -111,6 +117,13 @@ server.on('request', function (req, res) {
 
 			});
 
+		} else {
+			
+			if(!isRequest) {
+				console.log(" > unknown action");
+				res.end(JSON.stringify(responseArray));
+			}
+			
 		}
 
 	} catch (ex) {
