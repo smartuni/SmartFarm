@@ -5,9 +5,9 @@ Author: Sebastian Schulz
 ## Installation
 
 * Requirements
-	* NodeJS (beinhaltet npm)
+	* NodeJS (implements npm)
 	* Angular-CLI (v1.0.0)
-* Dependencies und Source Files
+* Dependencies and Source Files
 
 ## Getting started
 
@@ -23,7 +23,7 @@ npm install -g @angular/cli@1.0.0
 grunt watch
 ```
 
-## Start the WebApp
+## Starting the WebApp
 
 * starts the WebApp in localhost
 ```
@@ -33,3 +33,5 @@ ng serve
 ```
 ng serve --host 0.0.0.0
 ```
+
+The WebApp is compiled after a while, you can visit the WebApp with the url which is display on the console.

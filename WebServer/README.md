@@ -1,16 +1,22 @@
-# Installation
+# requirements
+* NodeJS (implements npm)
+* CoAP-CLI (https://github.com/mcollina/coap-cli)
+
+# installation
 ```
 npm install
 ```
 
 # start the server
+
 ```
 node coan.js
 ```
-* Der Server startet im localhost, der Port wird auf der Konsole ausgegeben
+* Server is in localhost
+* Port is displayed on the console
 
-# Server ansprechen
-* Es muss der CoAP-CLI installiert werden (https://github.com/mcollina/coap-cli)
+# example
+
 ```
 echo '' | coap post coap://localhost/getuser/1
 ```

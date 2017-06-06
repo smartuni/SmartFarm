@@ -1,6 +1,9 @@
 // CoAP
 var coap = require('coap')
 
+// custom functions
+var userFunctions = require('./functions/user')
+
 // Server
 var server = coap.createServer(
 	{
@@ -11,16 +14,6 @@ var server = coap.createServer(
 		res.setHeader('Content-Type', 'application/json');
 	}
 );
-
-// Datenbank Anbindung
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-	host     : 'localhost',
-	user     : 'root',
-	password : '',
-	database : 'riot_smartfarm',
-	connectionLimit : 100
-});
 
 // Antwort JSON-Objekt
 var responseArray;
@@ -63,9 +56,13 @@ server.on('request', function (req, res) {
 		// Requests
 		if (request_name === 'getusers') {
 
-			isRequest = true;
+			if(typeof userFunctions.getUserCount === "undefined") {
+				throw(" > undefined function");
+			} else {
+				isRequest = true;
+			}
 			
-			getUserCount(function(error, count) {
+			userFunctions.getUserCount(function(error, count) {
 
 				try {
 					
@@ -92,9 +89,13 @@ server.on('request', function (req, res) {
 
 		} if (request_name === 'getuser' && request_data !== '') {
 
-			isRequest = true;
+			if(typeof userFunctions.getUser === "undefined") {
+				throw(" > undefined function");
+			} else {
+				isRequest = true;
+			}
 			
-			getUser(parseInt(request_data, 10), function(status, data) {
+			userFunctions.getUser(parseInt(request_data, 10), function(status, data) {
 
 				try {
 					
@@ -128,61 +129,10 @@ server.on('request', function (req, res) {
 
 	} catch (ex) {
 		console.log(ex);
+		res.end(JSON.stringify(responseArray));
 	}
 	
 });
-
-function getUserCount(callback) {
-	"use strict";
-	
-	try {
-		
-		console.log(" > getUserCount");
-
-		connection.query(
-			'SELECT COUNT(*) AS `count` FROM smart_users', 
-			function(err, rows) {
-
-				if (err) {
-					throw(err);
-				} 
-				
-				callback(null, rows[0].count);
-
-			}
-		);
-		
-	} catch(ex) {
-		callback(ex);
-	}
-	
-}
-
-function getUser(user_id, callback) {
-	"use strict";
-			
-	if(user_id < 1) {
-		callback(200, 'unknown user id');
-	}
-	
-	connection.query(
-		'SELECT username FROM smart_users WHERE user_id = ' + user_id, 
-		function(err, rows) {
-          
-			if (!err) {
-				if(rows.length < 1) {
-					callback(404, 'user does not exist');
-				} else {
-					callback(200, rows[0].username);
-				}
-			} else {
-				callback(500, 'query failed');
-			}
-
-		}
-	);
-	
-}
 
 server.on('error', function(e) {
 	"use strict";
