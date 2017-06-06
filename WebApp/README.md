@@ -6,9 +6,10 @@ Autor: Sebastian Schulz
 
 * Requirements
 	* NodeJS &amp; npm
-	* bower: npm install -g bower
+	* Angular-CLI (v1.0.0)
+		* npm install -g @angular/cli@1.0.0
 * Dependencies und Source Files
-	* <pre>bower install</pre>
+	* <pre>npm install</pre>
     * <pre>grunt watch</pre>
 	
 ## Starten der WebApp
