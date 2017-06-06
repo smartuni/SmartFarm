@@ -222,7 +222,7 @@ void *send_thread(void *arg)
 int main(void)
 {
 	printf("\n\n\n\n");
-printf("******************+*********************************************************\n");
+printf("****************************************************************************\n");
 printf("*                 Welcome To the Smart Farm Project                        *\n");
 printf("*                                                                          *\n");
 printf("*                      ZZZZZZ                                              *\n");
@@ -264,6 +264,7 @@ printf("*   Name: Smartfarm.c                                                   
 printf("*                                                                          *\n");
 printf("*   To-Do: -CoAP-Server on node (IEEE 802.15.4 )                           *\n");
 printf("*          -add lora-send function in main program                         *\n");
+printf("*          -send and receive at same Time(LoRa)                            *\n");
 printf("*          -Error-handling                                                 *\n");
 printf("*                                                                          *\n");
 printf("*   NOTICE: This program runs with boards now!!!!                          *\n");
