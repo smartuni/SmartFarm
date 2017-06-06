@@ -27,10 +27,11 @@ Achtung, dieses benötigt ungefähr 2h Zeit !!
     $ wget https://bootstrap.pypa.io/get-pip.py
     $ sudo python3 get-pip.py
     $ sudo pip3 install requests
-
+    
+### pyserial installieren
+    $ python3 -m pip install pyserial
 
 ## aiocoap
-
     $ sudo pip3 install --upgrade "aiocoap[all]"
 
 Funktionen von aiocoap: http://aiocoap.readthedocs.io/en/latest/guidedtour.html
