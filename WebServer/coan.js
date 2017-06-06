@@ -2,12 +2,15 @@
 var coap = require('coap')
 
 // Server
-var server = coap.createServer(function(req, res) {
-	"use strict";
-	
-	res.setHeader('Content-Type', 'application/json');
-	
-});
+var server = coap.createServer(
+	{
+		type: 'udp6'
+	},
+	function(req, res) {
+		"use strict";
+		res.setHeader('Content-Type', 'application/json');
+	}
+);
 
 // Datenbank Anbindung
 var mysql      = require('mysql');
