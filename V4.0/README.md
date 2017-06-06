@@ -2,7 +2,7 @@
 
 # Main from SmartFarm Project
 
-## Funktions
+## Functions
 RFID-Part
     
     - send RFID of Tag
@@ -13,6 +13,7 @@ Voltage_Control
      - send if fence is broken or if sth. lies on it
      - send if animal-gate is open or closed
 LoRA
+
 	-send and receive data
 	
 IEEE 802.15.4
