@@ -5,12 +5,17 @@ Autor: Sebastian Schulz
 ## Installation
 
 * Requirements
-	* NodeJS &amp; npm
+	* NodeJS (beinhaltet npm)
 	* Angular-CLI (v1.0.0)
-		* npm install -g @angular/cli@1.0.0
 * Dependencies und Source Files
 	* <pre>npm install</pre>
     * <pre>grunt watch</pre>
+	
+## Packages
+
+```
+npm install -g @angular/cli@1.0.0
+```
 	
 ## Starten der WebApp
 
