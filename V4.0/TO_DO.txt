@@ -1,0 +1,27 @@
+CoAP cliet und server auf dem pi
+Upd Pakete versenden client und pi server (Shield funktioiert)
+
+to-DO:
+Auf dem Knoten ein co-Ap server zum laufen bekommen der vom Pi angesprochen werden kann.
+in ein Thread auf jedem Modul
+
+
+
+
+LORA:
+Daten senden und Empfangen
+Struct-> Datenstructur für unsere Daten 
+
+To_DO: Senden und empfangen gleichzeitig
+Code in das Hauptprogramm schnibbeln-> multiprocess kommunikation
+->Id'S definieren
+
+
+RFID:
+- Tags einlesen
+- RFID weitergeben
+- cac Check (Richtige einlesen der RFID'S)
+
+T0-DO:
+-> senden der Daten via LoRA
+
