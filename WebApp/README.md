@@ -26,7 +26,8 @@ grunt watch
 ## Start the WebApp
 
 * starts the WebApp in localhost
-```ng serve
+```
+ng serve
 ```
 * starts the WebApp
 ```
