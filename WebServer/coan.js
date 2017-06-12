@@ -59,7 +59,8 @@ server.on('request', function (req, res) {
 		if(request_name.match(/User/)) {
 						
 			if(typeof userFunctions[request_name] === "undefined") {
-				console.log(' > userfunction: ' + request_name + ' not found');
+				responseArray.error = 'function: ' + request_name + ' not found';
+				console.log(' > function: ' + request_name + ' not found');
 			} else {
 				
 				isRequest = true;
@@ -94,234 +95,123 @@ server.on('request', function (req, res) {
 				
 			}
 			
-		}
-		
-		// Requests
-		if (request_name === 'getgates') {
-
-			if(typeof gateFunctions.getGateCount === "undefined") {
-				throw(" > undefined function");
-			} else {
-				isRequest = true;
-			}
+		} else if(request_name.match(/Gate/)) {
 			
-			gateFunctions.getGateCount(function(error, count) {
-
-				try {
-					
-					if(error) {
-						throw(error);
-					} else {
-
-						responseArray.status = 200;
-						responseArray.action = request_name;
-						responseArray.data = count;
-						responseArray.error = '';
-
-						console.log(" -> getGateCount response: 200 - " + count);
-
-						res.end(JSON.stringify(responseArray));
-
-					}
-
-				} catch(ex) {
-					console.log(ex);
-				}
-
-			});
-
-		} else if (request_name === 'getgate' && request_data !== '') {
-
-			if(typeof gateFunctions.getGate === "undefined") {
-				throw(" > undefined function");
+			if(typeof gateFunctions[request_name] === "undefined") {
+				responseArray.error = 'function: ' + request_name + ' not found';
+				console.log(' > function: ' + request_name + ' not found');
 			} else {
+				
 				isRequest = true;
-			}
-			
-			gateFunctions.getGate(parseInt(request_data, 10), function(status, data) {
-
-				try {
+				
+				gateFunctions[request_name]([request_data], function(error, data) {
 					
-					responseArray.status = status;
 					responseArray.action = request_name;
-					responseArray.value = request_data;
-					responseArray.data = data;
+					
+					try {
 
-					if(status === 200) {
-						responseArray.error = '';
+						if(error) {
+							throw(error);
+						} else {
+
+							responseArray.status = 200;
+							responseArray.data = data;
+							responseArray.error = '';
+
+							console.log(" -> " + request_name + " response: 200");
+							console.log(" -> Data: " + JSON.stringify(data));
+
+						}
+
+					} catch(ex) {
+						console.log(" -> Exception: " + JSON.stringify(ex));
+						responseArray.error = ex;
 					}
-
-					console.log(" -> getGate response: " + status + " - " + data.data.id);
-
+					
 					res.end(JSON.stringify(responseArray));
-
-				} catch(ex) {
-					console.log(ex);
-				}
-
-			});
-
-		} else if (request_name === 'togglegate' && request_data !== '') {
-
-			if(typeof gateFunctions.toggleGate === "undefined") {
-				throw(" > undefined function");
-			} else {
-				isRequest = true;
+					
+				});
+				
 			}
 			
-			var gate_id = parseInt(request_data, 10);
-						
-			gateFunctions.toggleGate(gate_id, function(status, data) {
-
-				try {
+		} else if(request_name.match(/Fence/)) {
+			
+			if(typeof fenceFunctions[request_name] === "undefined") {
+				responseArray.error = 'function: ' + request_name + ' not found';
+				console.log(' > function: ' + request_name + ' not found');
+			} else {
+				
+				isRequest = true;
+				
+				fenceFunctions[request_name]([request_data], function(error, data) {
 					
-					responseArray.status = status;
 					responseArray.action = request_name;
-					responseArray.value = request_data;
-					responseArray.data = data;
+					
+					try {
 
-					if(status === 200) {
-						responseArray.error = '';
+						if(error) {
+							throw(error);
+						} else {
+
+							responseArray.status = 200;
+							responseArray.data = data;
+							responseArray.error = '';
+
+							console.log(" -> " + request_name + " response: 200");
+							console.log(" -> Data: " + JSON.stringify(data));
+
+						}
+
+					} catch(ex) {
+						console.log(" -> Exception: " + JSON.stringify(ex));
+						responseArray.error = ex;
 					}
-
-					console.log(" -> toggleGate response: " + status + " - " + data.data.state);
-
+					
 					res.end(JSON.stringify(responseArray));
-
-				} catch(ex) {
-					console.log(ex);
-				}
-
-			});
-
-		} else if (request_name === 'getfences') {
-
-			if(typeof fenceFunctions.getFenceCount === "undefined") {
-				throw(" > undefined function");
-			} else {
-				isRequest = true;
+					
+				});
+				
 			}
 			
-			fenceFunctions.getFenceCount(function(error, count) {
-
-				try {
-					
-					if(error) {
-						throw(error);
-					} else {
-
-						responseArray.status = 200;
-						responseArray.action = request_name;
-						responseArray.data = count;
-						responseArray.error = '';
-
-						console.log(" -> getFenceCount response: 200 - " + count);
-
-						res.end(JSON.stringify(responseArray));
-
-					}
-
-				} catch(ex) {
-					console.log(ex);
-				}
-
-			});
-
-		} else if (request_name === 'getfence' && request_data !== '') {
-
-			if(typeof fenceFunctions.getFence === "undefined") {
-				throw(" > undefined function");
-			} else {
-				isRequest = true;
-			}
+		} else if(request_name.match(/Livestock/)) {
 			
-			fenceFunctions.getFence(parseInt(request_data, 10), function(status, data) {
-
-				try {
+			if(typeof livestockFunctions[request_name] === "undefined") {
+				responseArray.error = 'function: ' + request_name + ' not found';
+				console.log(' > function: ' + request_name + ' not found');
+			} else {
+				
+				isRequest = true;
+				
+				livestockFunctions[request_name]([request_data], function(error, data) {
 					
-					responseArray.status = status;
 					responseArray.action = request_name;
-					responseArray.value = request_data;
-					responseArray.data = data;
+					
+					try {
 
-					if(status === 200) {
-						responseArray.error = '';
+						if(error) {
+							throw(error);
+						} else {
+
+							responseArray.status = 200;
+							responseArray.data = data;
+							responseArray.error = '';
+
+							console.log(" -> " + request_name + " response: 200");
+							console.log(" -> Data: " + JSON.stringify(data));
+
+						}
+
+					} catch(ex) {
+						console.log(" -> Exception: " + JSON.stringify(ex));
+						responseArray.error = ex;
 					}
-
-					console.log(" -> getFence response: " + status + " - " + data.data.id);
-
+					
 					res.end(JSON.stringify(responseArray));
-
-				} catch(ex) {
-					console.log(ex);
-				}
-
-			});
-
-		} else if (request_name === 'getlivestocks') {
-
-			if(typeof livestockFunctions.getLivestockCount === "undefined") {
-				throw(" > undefined function");
-			} else {
-				isRequest = true;
+					
+				});
+				
 			}
 			
-			livestockFunctions.getLivestockCount(function(error, count) {
-
-				try {
-					
-					if(error) {
-						throw(error);
-					} else {
-
-						responseArray.status = 200;
-						responseArray.action = request_name;
-						responseArray.data = count;
-						responseArray.error = '';
-
-						console.log(" -> getLivestockCount response: 200 - " + count);
-
-						res.end(JSON.stringify(responseArray));
-
-					}
-
-				} catch(ex) {
-					console.log(ex);
-				}
-
-			});
-
-		} else if (request_name === 'getlivestock' && request_data !== '') {
-
-			if(typeof livestockFunctions.getLivestock === "undefined") {
-				throw(" > undefined function");
-			} else {
-				isRequest = true;
-			}
-			
-			livestockFunctions.getLivestock(parseInt(request_data, 10), function(status, data) {
-
-				try {
-					
-					responseArray.status = status;
-					responseArray.action = request_name;
-					responseArray.value = request_data;
-					responseArray.data = data;
-
-					if(status === 200) {
-						responseArray.error = '';
-					}
-
-					console.log(" -> getLivestock response: " + status + " - " + data.data.id);
-
-					res.end(JSON.stringify(responseArray));
-
-				} catch(ex) {
-					console.log(ex);
-				}
-
-			});
-
 		} else {
 			
 			if(!isRequest) {

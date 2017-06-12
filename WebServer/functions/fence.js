@@ -2,7 +2,7 @@ var db = require('./database')
 
 module.exports = {
 
-	getFenceCount: function(callback) {
+	getFenceCount: function(data, callback) {
 		"use strict";
 
 		try {
@@ -31,48 +31,50 @@ module.exports = {
 		"use strict";
 
 		if(fence_id < 1) {
-			callback(200, {status : 500, action : 'getFence', error : 'unknown fence id'});
-		}
+			callback({status : 500, action : 'getFence', error : 'unknown fence id'});
+		} else {
 
-		db.connection.query(
-			'SELECT f.*, COUNT(g.gate_id) AS `gate_count` FROM smart_fences f' +
-				' JOIN smart_fences_gates g ON f.fence_id = g.fence_id' +
-				' WHERE f.fence_id = ' + fence_id, 
-			function(err, rows) {
+			db.connection.query(
+				'SELECT f.*, COUNT(g.gate_id) AS `gate_count` FROM smart_fences f' +
+					' JOIN smart_fences_gates g ON f.fence_id = g.fence_id' +
+					' WHERE f.fence_id = ' + fence_id, 
+				function(err, rows) {
 
-				var responseArray = {
-					status 	: 500,
-					action 	: 'getFence'
-				};
-				
-				if (!err) {
-					
-					if(rows.length !== 1 || rows[0].name === null) {
-						responseArray.status = 404;
-						responseArray.error = 'fence does not exist';
+					var responseArray = {
+						status 	: 500,
+						action 	: 'getFence'
+					};
+
+					if (!err) {
+
+						if(rows.length !== 1 || rows[0].name === null) {
+							responseArray.status = 404;
+							responseArray.error = 'fence does not exist';
+						} else {
+
+							responseArray.status = 200;
+							responseArray.data = {
+								id			: rows[0].fence_id,
+								name		: rows[0].name,
+								state		: rows[0].state,
+								updated		: rows[0].updated,
+								gate_count	: rows[0].gate_count
+							};
+
+						}
+
 					} else {
-						
-						responseArray.status = 200;
-						responseArray.data = {
-							id			: fence_id,
-							name		: rows[0].name,
-							state		: rows[0].state,
-							updated		: rows[0].updated,
-							gate_count	: rows[0].gate_count
-						};
-						
+						responseArray.status = 500;
+						responseArray.error = 'query failed';
 					}
-					
-				} else {
-					responseArray.status = 500;
-					responseArray.error = 'query failed';
-				}
-				
-				callback(responseArray.status, responseArray);
 
-			}
+					callback(null, responseArray);
+
+				}
+
+			);
 			
-		);
+		}
 
 	}
 	

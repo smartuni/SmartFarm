@@ -2,6 +2,10 @@
 * NodeJS (implements npm)
 * CoAP-CLI (https://github.com/mcollina/coap-cli)
 
+# information
+
+* command names are case sensitive (getUserCount =/= getusercount)
+
 # installation
 ```
 npm install
@@ -19,16 +23,20 @@ node coan.js
 
 Name | Description | Parameter | ReturnValues
 --- | --- | --- | ---
-getusers | User Count (number) | none | int
-getuser | User Data | user_id | object
-getfences | Fence Count (number) | none | int
-getfence | Fence Data | fence_id | object
-getgates | Gate Count (number) | none | int
-getgate | Gate Data | gate_id | object
-togglegate | Change state of Gate | gate_id | object
+getUserCount | User Count (number) | none | int
+getUser | User Data | user_id | object
+getFenceCount | Fence Count (number) | none | int
+getFence | Fence Data | fence_id | object
+getGateCount | Gate Count (number) | none | int
+getGate | Gate Data | gate_id | object
+toggleGate | Change state of Gate | gate_id | object
 
 # example
 
 ```
-echo '' | coap post coap://localhost/getuser/1
+echo '' | coap post coap://localhost/getUserCount
+```
+
+```
+echo '' | coap post coap://localhost/getUser/2
 ```
