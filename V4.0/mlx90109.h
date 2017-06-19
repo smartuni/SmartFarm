@@ -65,10 +65,10 @@ typedef struct {
  */
 typedef struct {
 	uint64_t tagId;				/**< Tag ID */
-	uint16_t countryCode;		/**< Country Code of TaG */
+	uint16_t countryCode;		/**< Country Code of Tag */
 	uint16_t dataBlock;			/**< Data Block is used */
 	uint16_t animalTag;			/**< For Animal Identification */
-	uint8_t checksumData[8];	/**< 64bit for chemsum calculation */
+	uint8_t checksumData[8];	/**< 64bit for checksum calculation */
 	uint16_t checksumArr[2];	/**< Checksum 2byte of 64bit block, from Tag */
 	uint16_t checksum16;		/**< 16bit checksum, calcuated */
 	uint8_t dataB[3];			/**< for Data on Tag, if DataBlock is 1 */

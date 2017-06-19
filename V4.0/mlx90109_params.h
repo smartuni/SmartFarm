@@ -20,6 +20,7 @@
 #define MLX90109_PARAMS_H
 
 #include "board.h"
+#include "mlx90109.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,23 +30,26 @@ extern "C" {
  * @brief   Set default configuration parameters for the MLX90109 driver
  * @{
  */
-#ifndef MLX90109_PARAM_CLOCK
-#define MLX90109_PARAM_CLOCK       (GPIO_PIN(PORT_A, 1)) // (GPIO_PIN(PORT_A, 15))
+#ifndef MLX90109_PARAM_CLOCK_PIN
+#define MLX90109_PARAM_CLOCK_PIN       (GPIO_PIN(0, 1)) // (GPIO_PIN(PORT_A, 15))
 #endif
-#ifndef MLX90109_PARAM_DATA
-#define MLX90109_PARAM_DATA       (GPIO_PIN(PORT_A, 4))//(GPIO_PIN(PORT_C, 14))
+#ifndef MLX90109_PARAM_DATA_PIN
+#define MLX90109_PARAM_DATA_PIN   	   (GPIO_PIN(0, 4))//(GPIO_PIN(PORT_C, 14))
 #endif
-#ifndef MLX90109_PARAM_MODE
-#define MLX90109_PARAM_MODE 	  (0)
+#ifndef MLX90109_PARAM_MODE_PIN
+#define MLX90109_PARAM_MODE_PIN		  (0)
 #endif
-#ifndef MLX90109_PARAM_DATASELECT
-#define MLX90109_PARAM_DATASELECT (0)
+#ifndef MLX90109_PARAM_DATASELECT_PIN
+#define MLX90109_PARAM_DATASELECT_PIN (0)
 #endif
-#ifndef MLX90109_PARAM_MODU
-#define MLX90109_PARAM_MODU       (0)
+#ifndef MLX90109_PARAM_MODU_PIN
+#define MLX90109_PARAM_MODU_PIN   (0)
 #endif
 #ifndef MLX90109_PARAM_SPEED
-#define MLX90109_PARAM_SPEED      (4000)//(2000)
+#define MLX90109_PARAM_SPEED      (4000)//2000 baud or 4000 baud
+#endif
+#ifndef MLX90109_PARAM_CODE
+#define MLX90109_PARAM_CODE       (2)//  1 = Manchester, 2 = Biphase
 #endif
 /** @} */
 
@@ -53,11 +57,11 @@ extern "C" {
  * @brief   MLX90109 configuration
  */
 #ifndef MLX90109_PARAMS
-#define MLX90109_PARAMS           { .clock			= MLX90109_PARAM_CLOCK ,\
-									.data			= MLX90109_PARAM_DATA ,\
-									.mode			= MLX90109_PARAM_MODE ,\
-									.dataSelect		= MLX90109_PARAM_DATASELECT ,\
-									.modu			= MLX90109_PARAM_MODU ,},
+#define MLX90109_PARAMS           { .clock			= MLX90109_PARAM_CLOCK_PIN ,\
+									.data			= MLX90109_PARAM_DATA_PIN ,\
+									.mode			= MLX90109_PARAM_MODE_PIN ,\
+									.dataSelect		= MLX90109_PARAM_DATASELECT_PIN ,\
+									.modu			= MLX90109_PARAM_MODU_PIN ,},
 #endif
 
 static const mlx90109_params_t mlx90109_params[] ={
@@ -70,6 +74,6 @@ static const mlx90109_params_t mlx90109_params[] ={
 }
 #endif
 
-#endif /* SDCARD_SPI_PARAMS_H */
+#endif /* MLX90109_PARAMS_H */
 /** @} */
  
