@@ -1,1 +1,3 @@
-WebServer/node_modules/
+WebServer/CoAP/node_modules/
+WebServer/CoAP/functions/database.js
+

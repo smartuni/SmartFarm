@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.22",
+    "coap": "^0.21.0",
     "core-js": "^2.4.1",
     "grunt": "^1.0.1",
     "ng2-bootstrap": "^1.6.1",

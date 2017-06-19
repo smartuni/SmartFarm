@@ -1,0 +1,21 @@
+{
+  "name": "riot-app",
+  "description": "",
+  "main": "",
+  "authors": [
+    "HAW Hamburg"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/SlicewOw/SmartFarm",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-coap": "^0.0.2",
+    "jquery": "^3.2.1"
+  }
+}

@@ -27,11 +27,11 @@ module.exports = {
 		}
 
 	},
-	getLivestock: function(livestock_id, callback) {
+	getLivestock: function(rfid, callback) {
 		"use strict";
 
-		if(livestock_id < 1) {
-			callback(null, {status : 405, action : 'getLivestock', error : 'unknown fence id'});
+		if(rfid === "") {
+			callback(null, {status : 405, action : 'getLivestock', error : 'unknown livestock id'});
 		} else {
 
 			db.connection.query(
@@ -41,7 +41,7 @@ module.exports = {
 					' FROM smart_livestock l' +
 					' LEFT JOIN smart_livestock_category c ON l.category_id = c.category_id' +
 					' LEFT JOIN smart_fences f ON l.fence_id = f.fence_id' +
-					' WHERE l.livestock_id = ' + livestock_id, 
+					' WHERE l.rfid = \'' + rfid + '\'', 
 				function(err, rows) {
 
 					var responseArray = {
@@ -53,12 +53,13 @@ module.exports = {
 
 						if(rows.length !== 1 || rows[0].name === null) {
 							responseArray.status = 404;
-							responseArray.error = 'livestock does not exist';
+							responseArray.error = 'livestock (' + rfid + ' - ' + rows.length + ') does not exist';
 						} else {
 
 							responseArray.status = 200;
 							responseArray.data = {
-								id			: livestock_id,
+								id			: rows[0].livestock_id,
+								rfid		: rfid,
 								name		: rows[0].name,
 								category	: {
 									id		: rows[0].category_id,
