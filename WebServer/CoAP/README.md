@@ -1,15 +1,22 @@
 # requirements
 * NodeJS (implements npm)
 * CoAP-CLI (https://github.com/mcollina/coap-cli)
+* Apache and MySQL
 
 # information
 
 * command names are case sensitive (getUserCount =/= getusercount)
 
 # installation
+
 ```
 npm install
 ```
+
+* including database connection
+ * copy /functions/database.js.sample and remove .sample
+ * fill in data to connect to your database
+ * import database tables: /install/Database_Import.sql
 
 # start the server
 
