@@ -12,6 +12,10 @@ Author: Sebastian Schulz
 ## Getting started
 
 ```
+bower install
+```
+
+```
 npm install
 ```
 
