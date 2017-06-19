@@ -1,6 +1,12 @@
 // CoAP
 var coap = require('coap')
 
+// custom functions
+var userFunctions = require('./functions/user')
+var fenceFunctions = require('./functions/fence')
+var gateFunctions = require('./functions/gate')
+var livestockFunctions = require('./functions/livestock')
+
 // Server
 var server = coap.createServer(
 	{
@@ -11,16 +17,6 @@ var server = coap.createServer(
 		res.setHeader('Content-Type', 'application/json');
 	}
 );
-
-// Datenbank Anbindung
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-	host     : 'localhost',
-	user     : 'root',
-	password : '',
-	database : 'riot_smartfarm',
-	connectionLimit : 100
-});
 
 // Antwort JSON-Objekt
 var responseArray;
@@ -60,63 +56,162 @@ server.on('request', function (req, res) {
 		// Payload: Input vom Clienten
 		//console.log(" -> data: " + req.payload + "\n");
 
-		// Requests
-		if (request_name === 'getusers') {
+		if(request_name.match(/User/)) {
+						
+			if(typeof userFunctions[request_name] === "undefined") {
+				responseArray.error = 'function: ' + request_name + ' not found';
+				console.log(' > function: ' + request_name + ' not found');
+			} else {
+				
+				isRequest = true;
+				
+				userFunctions[request_name]([request_data], function(error, data) {
 
-			isRequest = true;
-			
-			getUserCount(function(error, count) {
-
-				try {
-					
-					if(error) {
-						throw(error);
-					} else {
-
-						responseArray.status = 200;
-						responseArray.action = request_name;
-						responseArray.data = count;
-						responseArray.error = '';
-
-						console.log(" -> getUser response: 200 - " + count);
-
-						res.end(JSON.stringify(responseArray));
-
-					}
-
-				} catch(ex) {
-					console.log(ex);
-				}
-
-			});
-
-		} if (request_name === 'getuser' && request_data !== '') {
-
-			isRequest = true;
-			
-			getUser(parseInt(request_data, 10), function(status, data) {
-
-				try {
-					
-					responseArray.status = status;
 					responseArray.action = request_name;
-					responseArray.value = request_data;
-					responseArray.data = data;
+					
+					try {
 
-					if(status === 200) {
-						responseArray.error = '';
+						if(error) {
+							throw(error);
+						} else {
+
+							responseArray.status = 200;
+							responseArray.data = data;
+							responseArray.error = '';
+
+							console.log(" -> " + request_name + " response: 200");
+							console.log(" -> Data: " + JSON.stringify(data));
+
+						}
+
+					} catch(ex) {
+						console.log(" -> Exception: " + JSON.stringify(ex));
+						responseArray.error = ex;
 					}
-
-					console.log(" -> getUser response: " + status + " - " + data);
-
+					
 					res.end(JSON.stringify(responseArray));
 
-				} catch(ex) {
-					console.log(ex);
-				}
+				});
+				
+			}
+			
+		} else if(request_name.match(/Gate/)) {
+			
+			if(typeof gateFunctions[request_name] === "undefined") {
+				responseArray.error = 'function: ' + request_name + ' not found';
+				console.log(' > function: ' + request_name + ' not found');
+			} else {
+				
+				isRequest = true;
+				
+				gateFunctions[request_name]([request_data], function(error, data) {
+					
+					responseArray.action = request_name;
+					
+					try {
 
-			});
+						if(error) {
+							throw(error);
+						} else {
 
+							responseArray.status = 200;
+							responseArray.data = data;
+							responseArray.error = '';
+
+							console.log(" -> " + request_name + " response: 200");
+							console.log(" -> Data: " + JSON.stringify(data));
+
+						}
+
+					} catch(ex) {
+						console.log(" -> Exception: " + JSON.stringify(ex));
+						responseArray.error = ex;
+					}
+					
+					res.end(JSON.stringify(responseArray));
+					
+				});
+				
+			}
+			
+		} else if(request_name.match(/Fence/)) {
+			
+			if(typeof fenceFunctions[request_name] === "undefined") {
+				responseArray.error = 'function: ' + request_name + ' not found';
+				console.log(' > function: ' + request_name + ' not found');
+			} else {
+				
+				isRequest = true;
+				
+				fenceFunctions[request_name]([request_data], function(error, data) {
+					
+					responseArray.action = request_name;
+					
+					try {
+
+						if(error) {
+							throw(error);
+						} else {
+
+							responseArray.status = 200;
+							responseArray.data = data;
+							responseArray.error = '';
+
+							console.log(" -> " + request_name + " response: 200");
+							console.log(" -> Data: " + JSON.stringify(data));
+
+						}
+
+					} catch(ex) {
+						console.log(" -> Exception: " + JSON.stringify(ex));
+						responseArray.error = ex;
+					}
+					
+					res.end(JSON.stringify(responseArray));
+					
+				});
+				
+			}
+			
+		} else if(request_name.match(/Livestock/)) {
+			
+			if(typeof livestockFunctions[request_name] === "undefined") {
+				responseArray.error = 'function: ' + request_name + ' not found';
+				console.log(' > function: ' + request_name + ' not found');
+			} else {
+				
+				isRequest = true;
+				
+				livestockFunctions[request_name]([request_data], function(error, data) {
+					
+					responseArray.action = request_name;
+					
+					try {
+
+						if(error) {
+							throw(error);
+						} else {
+
+							responseArray.status = 200;
+							responseArray.data = data;
+							responseArray.error = '';
+
+							console.log(" -> " + request_name + " response: 200");
+							console.log(" -> Data: " + JSON.stringify(data));
+
+						}
+
+					} catch(ex) {
+						console.log(" -> Exception: " + JSON.stringify(ex));
+						responseArray.error = ex;
+					}
+					
+					res.end(JSON.stringify(responseArray));
+					
+				});
+				
+			}
+			
 		} else {
 			
 			if(!isRequest) {
@@ -128,61 +223,10 @@ server.on('request', function (req, res) {
 
 	} catch (ex) {
 		console.log(ex);
+		res.end(JSON.stringify(responseArray));
 	}
 	
 });
-
-function getUserCount(callback) {
-	"use strict";
-	
-	try {
-		
-		console.log(" > getUserCount");
-
-		connection.query(
-			'SELECT COUNT(*) AS `count` FROM smart_users', 
-			function(err, rows) {
-
-				if (err) {
-					throw(err);
-				} 
-				
-				callback(null, rows[0].count);
-
-			}
-		);
-		
-	} catch(ex) {
-		callback(ex);
-	}
-	
-}
-
-function getUser(user_id, callback) {
-	"use strict";
-			
-	if(user_id < 1) {
-		callback(200, 'unknown user id');
-	}
-	
-	connection.query(
-		'SELECT username FROM smart_users WHERE user_id = ' + user_id, 
-		function(err, rows) {
-          
-			if (!err) {
-				if(rows.length < 1) {
-					callback(404, 'user does not exist');
-				} else {
-					callback(200, rows[0].username);
-				}
-			} else {
-				callback(500, 'query failed');
-			}
-
-		}
-	);
-	
-}
 
 server.on('error', function(e) {
 	"use strict";
