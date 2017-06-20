@@ -34,7 +34,7 @@ Attention, this takes about 2h !!
 ## aiocoap
     $ sudo pip3 install --upgrade "aiocoap[all]"
 
-Funktionen von aiocoap: http://aiocoap.readthedocs.io/en/latest/guidedtour.html
+funktion of aiocoap: http://aiocoap.readthedocs.io/en/latest/guidedtour.html
 
 ## LoWPAN
 install LowPAN for Raspbian:
