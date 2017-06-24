@@ -48,9 +48,17 @@ server.on('request', function (req, res) {
 
 		}
 
-		var request_data = '';
-		if(urlArray.length > 2) {
-			request_data = urlArray[2];
+		var request_data = {
+			id		: 0,
+			state	: -1
+		};
+
+		if(urlArray.length >= 2) {
+			request_data.id = urlArray[2];
+		}
+
+		if(urlArray.length >= 3) {
+			request_data.state = urlArray[3];
 		}
 
 		// Payload: Input vom Clienten
@@ -65,7 +73,7 @@ server.on('request', function (req, res) {
 				
 				isRequest = true;
 				
-				userFunctions[request_name]([request_data], function(error, data) {
+				userFunctions[request_name](request_data, function(error, data) {
 
 					responseArray.action = request_name;
 					
@@ -104,7 +112,48 @@ server.on('request', function (req, res) {
 				
 				isRequest = true;
 				
-				gateFunctions[request_name]([request_data], function(error, data) {
+				gateFunctions[request_name](request_data, function(error, data) {
+					
+					responseArray.action = request_name;
+					
+					try {
+
+						if(error) {
+							throw(error);
+						} else {
+
+							responseArray.status = 200;
+							responseArray.data = data;
+							responseArray.error = '';
+
+							console.log(" -> " + request_name + " response: 200");
+							console.log(" -> Data: " + JSON.stringify(data));
+
+						}
+
+					} catch(ex) {
+						console.log(" -> Exception: " + JSON.stringify(ex));
+						responseArray.error = ex;
+					}
+					
+					res.end(JSON.stringify(responseArray));
+					
+				});
+				
+			}
+			
+		} else if(request_name.match(/Livestock/)) {
+			
+			if(typeof livestockFunctions[request_name] === "undefined") {
+
+				responseArray.error = 'function: ' + request_name + ' not found';
+				console.log(' > function: ' + request_name + ' not found');
+
+			} else {
+				
+				isRequest = true;
+				
+				livestockFunctions[request_name](request_data, function(error, data) {
 					
 					responseArray.action = request_name;
 					
@@ -143,46 +192,7 @@ server.on('request', function (req, res) {
 				
 				isRequest = true;
 				
-				fenceFunctions[request_name]([request_data], function(error, data) {
-					
-					responseArray.action = request_name;
-					
-					try {
-
-						if(error) {
-							throw(error);
-						} else {
-
-							responseArray.status = 200;
-							responseArray.data = data;
-							responseArray.error = '';
-
-							console.log(" -> " + request_name + " response: 200");
-							console.log(" -> Data: " + JSON.stringify(data));
-
-						}
-
-					} catch(ex) {
-						console.log(" -> Exception: " + JSON.stringify(ex));
-						responseArray.error = ex;
-					}
-					
-					res.end(JSON.stringify(responseArray));
-					
-				});
-				
-			}
-			
-		} else if(request_name.match(/Livestock/)) {
-			
-			if(typeof livestockFunctions[request_name] === "undefined") {
-				responseArray.error = 'function: ' + request_name + ' not found';
-				console.log(' > function: ' + request_name + ' not found');
-			} else {
-				
-				isRequest = true;
-				
-				livestockFunctions[request_name]([request_data], function(error, data) {
+				fenceFunctions[request_name](request_data, function(error, data) {
 					
 					responseArray.action = request_name;
 					
@@ -213,12 +223,11 @@ server.on('request', function (req, res) {
 			}
 			
 		} else {
-			
-			if(!isRequest) {
-				console.log(" > unknown action");
-				res.end(JSON.stringify(responseArray));
-			}
-			
+			console.log(" > unknown action");
+		}
+
+		if(!isRequest) {
+			res.end(JSON.stringify(responseArray));
 		}
 
 	} catch (ex) {

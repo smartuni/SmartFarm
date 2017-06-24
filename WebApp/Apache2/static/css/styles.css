@@ -1,0 +1,34 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* BOOTSTRAP CUSTOMIZE */
+.ajax-separator {
+	margin: 0;
+}
+
+/* FENCES */
+.fence-list-item {
+	position: inherit;
+}
+.fence-list-item:hover {
+	background: rgba(200, 200, 200, 0.2);
+	cursor: pointer;
+}
+
+/* ROW */
+.fence-list-item > p,
+.gate-list-item > p,
+.livestock-list-item > p {
+	margin: 0;
+}
+.fence-list-item > p:first-of-type,
+.gate-list-item > p:first-of-type,
+.livestock-list-item > p:first-of-type {
+	margin: 8px 0 0 0;
+}
+
+/* FONTS */
+
+.gray {
+	color: #929292;
+} 
