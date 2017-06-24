@@ -27,8 +27,11 @@ module.exports = {
 		}
 
 	},
-	getFence: function(fence_id, callback) {
+	getFence: function(data, callback) {
 		"use strict";
+
+		var fence_id = (typeof data.id !== "undefined") ?
+			data.id : 0;
 
 		if(fence_id < 1) {
 			callback({status : 500, action : 'getFence', error : 'unknown fence id'});
@@ -74,6 +77,53 @@ module.exports = {
 
 			);
 			
+		}
+
+	},
+	setFenceState: function(data, callback) {
+
+		"use strict";
+
+		if(typeof data.id === "undefined" || (data.id < 1)) {
+			callback({status : 401, action : 'setFenceState', error : 'unknown fence id'});
+		} else {
+
+			if(typeof data.state === "undefined" || (data.state < 0)) {
+				callback({status : 402, action : 'setFenceState', error : 'unknown fence state'});
+			} else {
+					
+				db.connection.query(
+					'UPDATE smart_fences' +
+						' SET state = ' + data.state +
+						' WHERE fence_id = ' + data.id, 
+					function(err, rows) {
+
+						var responseArray = {
+							status 	: 500,
+							action 	: 'setFenceState'
+						};
+
+						if (!err) {
+
+							responseArray.status = 200;
+							responseArray.data = {
+								id			: data.id,
+								state		: data.state
+							};
+
+						} else {
+							responseArray.status = 500;
+							responseArray.error = 'query failed (' + err.message + ')';
+						}
+
+						callback(null, responseArray);
+
+					}
+
+				);
+			
+			}
+
 		}
 
 	}

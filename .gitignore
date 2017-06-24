@@ -1,3 +1,7 @@
+WebApp/Angular2/bower_components/
+WebApp/Angular2/node_modules/
+WebApp/Apache2/node_modules/
+
 WebServer/CoAP/node_modules/
 WebServer/CoAP/functions/database.js
 

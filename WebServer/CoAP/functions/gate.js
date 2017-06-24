@@ -49,8 +49,11 @@ module.exports = {
 		}
 
 	},
-	getGate: function(gate_id, callback) {
+	getGate: function(data, callback) {
 		"use strict";
+
+		var gate_id = (typeof data.id !== "undefined") ?
+			data.id : 0
 
 		if(gate_id < 1) {
 			callback(null, {status : 405, action : 'getGate', error : 'unknown gate id'});
@@ -100,9 +103,12 @@ module.exports = {
 		}
 		
 	},
-	toggleGate: function(gate_id, callback) {
+	toggleGate: function(data, callback) {
 		"use strict";
-		
+				
+		var gate_id = (typeof data.id !== "undefined") ?
+			data.id : 0
+
 		if(gate_id < 1) {
 			callback({status : 405, action : 'toggleGate', error : 'unknown gate id'});
 		} else {
@@ -129,7 +135,7 @@ module.exports = {
 
 
 					} else {
-						responseArray.error = 'toggleGate, query failed';
+						responseArray.error = 'query failed (' + err.message + ')';
 					}
 
 					callback(null, responseArray);
@@ -140,6 +146,53 @@ module.exports = {
 		
 		}
 		
+	},
+	setGateState: function(data, callback) {
+
+		"use strict";
+
+		if(typeof data.id === "undefined" || (data.id < 1)) {
+			callback({status : 401, action : 'setGateState', error : 'unknown gate id'});
+		} else {
+
+			if(typeof data.state === "undefined" || (data.state < 0)) {
+				callback({status : 402, action : 'setGateState', error : 'unknown gate state'});
+			} else {
+					
+				db.connection.query(
+					'UPDATE smart_fences_gates' +
+						' SET state = ' + data.state +
+						' WHERE gate_id = ' + data.id, 
+					function(err, rows) {
+
+						var responseArray = {
+							status 	: 500,
+							action 	: 'setGateState'
+						};
+
+						if (!err) {
+
+							responseArray.status = 200;
+							responseArray.data = {
+								id			: data.id,
+								state		: data.state
+							};
+
+						} else {
+							responseArray.status = 500;
+							responseArray.error = 'query failed (' + err.message + ')';
+						}
+
+						callback(null, responseArray);
+
+					}
+
+				);
+			
+			}
+
+		}
+
 	}
 	
 };

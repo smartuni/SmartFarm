@@ -27,8 +27,11 @@ module.exports = {
 		}
 
 	},
-	getUser: function(user_id, callback) {
+	getUser: function(data, callback) {
 		"use strict";
+
+		var user_id = (typeof data.id !== "undefined") ?
+			data.id : 0;
 
 		if(user_id === null || user_id < 1) {
 			callback({status: 405, error: 'unknown user id'});

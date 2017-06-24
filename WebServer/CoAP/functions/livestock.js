@@ -27,11 +27,14 @@ module.exports = {
 		}
 
 	},
-	getLivestock: function(rfid, callback) {
+	getLivestock: function(data, callback) {
 		"use strict";
 
+		var rfid = (typeof data.id !== "undefined") ?
+			data.id : '';
+
 		if(rfid === "") {
-			callback(null, {status : 405, action : 'getLivestock', error : 'unknown livestock id'});
+			callback(null, {status : 405, action : 'getLivestock', error : 'unknown livestock rfid'});
 		} else {
 
 			db.connection.query(
@@ -76,7 +79,7 @@ module.exports = {
 
 					} else {
 						responseArray.status = 500;
-						responseArray.error = 'query failed';
+						responseArray.error = 'query failed (' + err.message + ')';
 					}
 
 					callback(null, responseArray);
@@ -87,6 +90,55 @@ module.exports = {
 
 		}
 		
+	},
+	setLivestockFence: function(data, callback) {
+		"use strict";
+
+		if(typeof data.id === "undefined" || (data.id === "")) {
+			callback({status : 401, action : 'setLivestockFence', error : 'unknown livestock rfid'});
+		} else {
+
+			if(typeof data.state === "undefined" || (data.state < 0)) {
+				callback({status : 402, action : 'setLivestockFence', error : 'unknown fence id'});
+			} else {
+					
+				var setState = (data.state > 0) ?
+					data.state : 'NULL'
+
+				db.connection.query(
+					'UPDATE smart_livestock' +
+						' SET fence_id = ' + setState +
+						' WHERE rfid = \'' + data.id + '\'',
+					function(err, rows) {
+
+						var responseArray = {
+							status 	: 500,
+							action 	: 'setLivestockFence'
+						};
+
+						if (!err) {
+
+							responseArray.status = 200;
+							responseArray.data = {
+								livestock_id	: data.id,
+								fence_id		: data.state
+							};
+
+						} else {
+							responseArray.status = 500;
+							responseArray.error = 'query failed (' + err.message + ')';
+						}
+
+						callback(null, responseArray);
+
+					}
+
+				);
+			
+			}
+
+		}
+
 	}
 	
 };
