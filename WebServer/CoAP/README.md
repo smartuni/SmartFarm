@@ -33,9 +33,14 @@ Name | Description | Parameter | ReturnValues
 getUserCount | User Count (number) | *none* | int
 getUser | User Data | user_id (int) | object
 getFenceCount | Fence Count (number) | *none* | int
-getFence | Fence Data | fence_id (int) | object
+getFence | Fence Data | fence_id (int) | object  
+setFenceState | Set State of Fence | fence_id (int), state (0/1) | object
+getLivestockCount | Livestock Count (number) | *none* | int
+getLivestock | Livestock Data | RFID Tag (string) | object
+setLivestockFence | Set Fence ID of Livestock | RFID Tag (string), fence_id (int) | object
 getGateCount | Gate Count (number) | *none* | int
 getGate | Gate Data | gate_id (int)| object
+setGateState | Set State of Gate | gate_id (int), state (0/1) | object
 toggleGate | Change state of Gate | gate_id (int) | object
 
 # example
