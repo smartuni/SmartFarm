@@ -1,0 +1,44 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" (click)="isCollapsed = !isCollapsed">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" routerLink="home">
+        {{title}}
+      </a>
+    </div>
+    <div  [collapse]="!isCollapsed" 
+          class="collapse navbar-collapse" 
+          id="nav-menu-collapse" #navmenu>
+      <ul class="nav navbar-nav">
+        <li>
+          <a routerLink="home" (click)="isCollapsed = !isCollapsed">Startseite</a>
+        </li>
+        <li>
+          <a routerLink="about" (click)="isCollapsed = !isCollapsed">About</a>
+        </li>
+        <li>
+          <a routerLink="admin" (click)="isCollapsed = !isCollapsed">Admin</a>
+        </li>
+        <li>
+          <a routerLink="imprint" (click)="isCollapsed = !isCollapsed">Impressum</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="clearfix"></div>
+<div class="main-container">
+  <div class="container">
+      <router-outlet></router-outlet>
+  </div>
+</div>
+<div class="container">
+  <div class="footer-disclaimer">
+    SmartFarm - Projekt RIOT Sommer Semester 2017 - Copyright &copy; 2017 by SmartFarm (HAW Hamburg)
+  </div>
+</div>

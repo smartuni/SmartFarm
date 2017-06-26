@@ -1,5 +1,3 @@
-[previous Version](../V3.0)
-
 # SmartFarm Project
 
 ## Overiew
@@ -183,9 +181,6 @@ calculate_transfer_value(double voltageFence, int recogniseGate)
 	
 ## To-Do:
     - bidirectorial communication (LoRa)  
-	- Testing under real conditions
+	  - Testing under real conditions
     - Error-handling  
 	
-
-
-

@@ -39,7 +39,6 @@
 */
  
 #include "mlx90109.h"
-#include "include/mlx90109_params.h"
 #include "checksum/ucrc16.h"
 #include <string.h>
 
@@ -58,29 +57,15 @@ int16_t mlx90109_init(mlx90109_t *dev, const mlx90109_params_t *params, gpio_cb_
 	
 	//Init mode Pin if used
 	if (dev->p.mode){
-		if (gpio_init( dev->p.mode,GPIO_OUT) != 0) return MLX90109_GPIO_FAULT;	
+		if (gpio_init( dev->p.mode,GPIO_IN_PU) != 0) return MLX90109_GPIO_FAULT;	
 	}
 	//Init data Rate Pin if used
 	if (dev->p.dataSelect){
-		if (gpio_init( dev->p.dataSelect,GPIO_OUT) != 0) return MLX90109_GPIO_FAULT;
-		
-		if (MLX90109_PARAM_SPEED == 2000){
-			gpio_write(dev->p.dataSelect, 1);
-		}
-		else if (MLX90109_PARAM_SPEED == 4000){
-			gpio_write(dev->p.dataSelect, 0);
-		}
+		if (gpio_init( dev->p.dataSelect,GPIO_IN_PU) != 0) return MLX90109_GPIO_FAULT;
 	}
 	//Init Modu Pin if used
 	if (dev->p.modu){
-		if (gpio_init( dev->p.modu,GPIO_OUT) != 0) return MLX90109_GPIO_FAULT;
-		
-		if (MLX90109_PARAM_CODE == 1){
-			gpio_write(dev->p.modu, 1);
-		}
-		else if (MLX90109_PARAM_CODE == 2){
-			gpio_write(dev->p.modu, 0);
-		}
+		if (gpio_init( dev->p.modu,GPIO_IN_PU) != 0) return MLX90109_GPIO_FAULT;
 	
 	}
 
@@ -121,8 +106,9 @@ int16_t mlx90109_format(mlx90109_t *dev, tagdata *tag)
 	
 	tag->checksum16 = 0;
 	tag->checksum16 = tag->checksum16 | tag->checksumArr[0] | (uint16_t)tag->checksumArr[1] << 8;
-	// Checksum calculaton
 	crc = ucrc16_calc_le(&tag->checksumData[0], sizeof(tag->checksumData), 0x8408 , 0x0000);
+//	printf("CRC Original: %x \n" , tag->checksum16);
+//	printf("CRC brechnet: %x \n" , crc);
 	
 	if ((tag->checksum16 != crc))
 	{
@@ -144,7 +130,7 @@ int16_t mlx90109_format(mlx90109_t *dev, tagdata *tag)
 	tag->animalTag = 0;
 	tag->animalTag = (tag->checksumData[7] & 0x80) >> 7;
 	
-	// Datablock for additional data and individual application
+	// Datablock
 	for (i=90; i<=97; i++)
 	{
 		tag->dataB[0] |= (dev->data[i] << (i-90));
@@ -166,20 +152,21 @@ int16_t mlx90109_format(mlx90109_t *dev, tagdata *tag)
 
 int16_t mlx90109_read(mlx90109_t *dev)
 {
-	// Detect "1"
+			
 	if((gpio_read(dev->p.data) > 0)&&(dev->counter_header==11))
 	{
 		dev->data[dev->counter]=1;
 		dev->counter++;
+		//printf("1");
 	}
-	// Detect "0"
+	
 	if ((!(gpio_read(dev->p.data)))&&(dev->counter_header==11))
 	{
 		dev->data[dev->counter]=0;
 		dev->counter++;
+		//printf("0");
 	}
 	
-	// Detect Header (10000000000 	  11bit Header)
 	if ((!(gpio_read(dev->p.data)))&&(dev->counter_header<10))
 	{
 		dev->counter_header++;
@@ -196,7 +183,7 @@ int16_t mlx90109_read(mlx90109_t *dev)
 		dev->counter_header++;
 	}
 
-	// Data complete after 127 bit
+
 	if ( dev->counter > 127)
 	{
 		dev->counter = 0;
