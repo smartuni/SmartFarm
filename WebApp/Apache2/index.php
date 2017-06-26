@@ -94,6 +94,6 @@ include(__DIR__ . '/php/database.php');
 			</div>
 		</div>
 	</div>
-	<div class="container" id="resultArray"></div>
+	<div class="container" id="resultArray" style="display: none;"></div>
 </body>
 </html>

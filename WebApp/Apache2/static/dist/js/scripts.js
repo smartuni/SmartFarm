@@ -1,3 +1,6 @@
+/* CONST */
+var const_fence_id = 0;
+
 /* AJAX */
 function getAJAXData(div_id, request_url, listGroupItem) {
 	"use strict";
@@ -7,7 +10,7 @@ function getAJAXData(div_id, request_url, listGroupItem) {
 		var insertClass = (listGroupItem) ?
 			'list-group-item' : 'panel-body';
 		
-		$("#" + div_id).html(
+		$("#" + div_id).fadeIn(
 			'<div class="' + insertClass + '">' + 
 				'<img src="./static/images/loader.gif" alt="Pending.." />' + 
 			'</div>'
@@ -216,11 +219,17 @@ function setFence(fence_id) {
 	
 	$("#resultArray").html('');
 	
-	// Livestocks
-	setLivestock(fence_id);
+	const_fence_id = fence_id;
 	
-	// Gates
-	setGate(fence_id)
+	if(const_fence_id > 0) {
+	
+		// Livestocks
+		setLivestock(fence_id);
+
+		// Gates
+		setGate(fence_id);
+
+	}
 	
 }
 function toggleFenceState(fence_id) {
@@ -232,6 +241,25 @@ function toggleFenceState(fence_id) {
 	);
 	
 }
+
+$(document).ready(function() {
+	
+	setInterval(
+		function(){ 
+
+			getAJAXData(
+				'fencesContainer', 
+				'ajax.php?site=fences&action=getAll',
+				false
+			);
+			
+			setFence(const_fence_id);
+
+		}, 
+		10000
+	);
+	
+});
 
 /* CONVERT */
 function convert2id(id_str) {
