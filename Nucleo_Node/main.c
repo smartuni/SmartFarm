@@ -24,6 +24,7 @@
 /* RX/TX Mode */
 #define NODE_MODE_TX
 
+#define THIS_NODE 0x03
 
 int sleepTime = 2.2;
 int sleepTime_VC = 5;
@@ -55,17 +56,16 @@ void *fence_thread(void *arg)
 				transferValue=calculate_transfer_value(voltage,recogniseGate);
     	    	
     			sprintf(str, "Fence info: %i", transferValue);
-
 				puts(str); 
 		
+                 /* Send data via LoRa*/
                 lora_frame payload;
-		        payload.nodeID = 0x03;
+		        payload.nodeID = THIS_NODE;
 	        	payload.frameID = FRAMEID_FENCE_TRANSFERVAL;
                 payload.data[0] = (char) transferValue;
 	        	lora_send_frame(payload);
 
 		        xtimer_sleep(5); 
-		  	
 		}
 }
 
@@ -74,7 +74,7 @@ void interrupt_hand(void *args)
 {
     if (args){}
     int16_t temp = 0;
-    //printf("Dies ist ein Interrupt\n");
+    //printf("This is an Interrupt\n");
     temp = mlx90109_read(&mlx90109_dev);
     if (temp == MLX90109_DATA_OK)
     {
@@ -99,9 +99,9 @@ void *rfid_thread(void *arg)
         if (neuerTag.newTag == 1){
             neuerTag.newTag = 0;   
 
-            /* Test for RFID and LORA*/
+            /* Send data via LoRa*/
 			lora_frame payload;
-			payload.nodeID = 0x03;
+			payload.nodeID = THIS_NODE;
 			payload.frameID = FRAMEID_RFID_TAGID;	
 			memcpy(&payload.data, &neuerTag.tagId, 5);
 			lora_send_frame(payload);
@@ -119,7 +119,7 @@ void *heartbeat_thread(void *arg)
     {
         printf("sending Heartbeat\n");
 		lora_frame payload;
-		payload.nodeID = 0x03;
+		payload.nodeID = THIS_NODE;
 		payload.frameID = FRAMEID_HEARTBEAT;
 		lora_send_frame(payload);
 		xtimer_sleep(10);	
@@ -168,10 +168,7 @@ printf("*                                                                       
 printf("*   Version:2.0 (Final Presentation)                                       *\n");
 printf("*   Last modification:25.06.2017                                           *\n");
 printf("*                                                                          *\n");
-printf("*   To-Do: -CoAP-Server on node (IEEE 802.15.4 )                           *\n");
-printf("*          -add lora-send function in main program                         *\n");
-printf("*          -send and receive at same Time(LoRa)                            *\n");
-printf("*          -Error-handling                                                 *\n");
+printf("*   To-Do: -Get a good grad                                                *\n");
 printf("*                                                                          *\n");
 printf("*   NOTICE: This program runs with boards now!!!!                          *\n");
 printf("*                                                                          *\n");
